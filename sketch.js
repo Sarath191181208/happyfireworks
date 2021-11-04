@@ -14,7 +14,8 @@ setInterval(() => {
 }, Math.random() * 1000 + 5000);
 
 function draw() {
-  background(180, 20, 20, 0.1);
+  // background(180, 20, 20, 0.1);
+  background(0, 0, 0);
   fireworks.forEach((f) => f.update());
   fireworks = fireworks.filter((f) => !f.isDead());
 }
