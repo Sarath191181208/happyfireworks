@@ -40,15 +40,15 @@ class Firework {
       var y = pos[1];
 
       // abs shape
-      // var target = createVector(this.pos.x + x, this.pos.y + y);
+      var target = createVector(this.pos.x + x, this.pos.y + y);
 
       // noise
-      const newX = random(x - 5, x + 5);
-      const newY = random(y - 5, y + 5);
-      var target = createVector(this.pos.x + newX, this.pos.y + newY);
-      maxForce = random(0.1, 1);
-      maxSpeed = random(2, 5);
-      size = 13;
+      // const newX = random(x - 5, x + 5);
+      // const newY = random(y - 5, y + 5);
+      // var target = createVector(this.pos.x + newX, this.pos.y + newY);
+      // maxForce = random(0.1, 1);
+      // maxSpeed = random(2, 5);
+      // size = 13;
 
       this.particles.push(
         new Particle(this.pos, target, this.h, maxForce, maxSpeed, size)
