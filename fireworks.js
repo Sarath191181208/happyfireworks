@@ -1,7 +1,12 @@
 class Firework {
   constructor() {
-    this.pos = createVector(random(70, width - 70), height);
-    this.vel = createVector(0, random(-5, -10));
+    this.pos = createVector(random(40, width - 40), height);
+    // v^2 - u^2 = 2as
+    // => u = sqrt(2*g*windowHeight)
+    // windowHeight = s
+    var u = Math.sqrt(2 * gravity.y * (windowHeight * 0.8));
+    // this.vel = createVector(0, -u);
+    this.vel = createVector(0, random(-5, -u));
     this.acc = createVector();
     this.size = 10;
     this.particles = [];

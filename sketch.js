@@ -1,6 +1,9 @@
 let fireworks, gravity;
 let no_per_step = 3;
 function setup() {
+  console.log(
+    "Author: Vangipuram Srinivasa Sarath Chandra, Email: vssarathc04@gmail.com"
+  );
   pixelDensity(1);
   createCanvas(windowWidth, windowHeight - 10);
   fireworks = [];
