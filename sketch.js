@@ -1,6 +1,7 @@
 let fireworks, gravity;
 let no_per_step = 3;
 function setup() {
+  pixelDensity(1);
   createCanvas(windowWidth, windowHeight - 10);
   fireworks = [];
   gravity = createVector(0, 0.1);
