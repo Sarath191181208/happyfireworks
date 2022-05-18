@@ -4,7 +4,7 @@ class Firework {
     // v^2 - u^2 = 2as
     // => u = sqrt(2*g*windowHeight)
     // windowHeight = s
-    var u = Math.sqrt(2 * gravity.y * (windowHeight * 0.8));
+    let u = Math.sqrt(2 * gravity.y * (windowHeight * 0.8));
     // this.vel = createVector(0, -u);
     this.vel = createVector(0, random(-5, -u));
     this.acc = createVector();
@@ -21,7 +21,7 @@ class Firework {
       size = 10;
     // const shape_size = random(7, size);
     const shape_size = 10;
-    var shapes = [
+    let shapes = [
       //[function            |   itr]
       [(s, a) => heart(s, a), 1],
       [(s, a) => clover(s, a), 1],
@@ -32,20 +32,23 @@ class Firework {
       [(s, a) => splash(s, a), 1],
     ];
     let shape = random(shapes);
-    var mul = shape[1];
+    let mul = shape[1];
     shape = shape[0];
+    let itr = 0;
     for (let a = 0; a < mul * TWO_PI; a += 0.08) {
-      var pos = shape(shape_size, a);
-      var x = pos[0];
-      var y = pos[1];
+      itr++;
+      if (mul == 4 && itr % 2 == 0) { continue }
+      let pos = shape(shape_size, a);
+      let x = pos[0];
+      let y = pos[1];
 
       // abs shape
-      var target = createVector(this.pos.x + x, this.pos.y + y);
+      let target = createVector(this.pos.x + x, this.pos.y + y);
 
       // noise
       // const newX = random(x - 5, x + 5);
       // const newY = random(y - 5, y + 5);
-      // var target = createVector(this.pos.x + newX, this.pos.y + newY);
+      // let target = createVector(this.pos.x + newX, this.pos.y + newY);
       // maxForce = random(0.1, 1);
       // maxSpeed = random(2, 5);
       // size = 13;
