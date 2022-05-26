@@ -48,7 +48,7 @@ class Firework {
       // noise
       // const newX = random(x - 5, x + 5);
       // const newY = random(y - 5, y + 5);
-      // let target = createVector(this.pos.x + newX, this.pos.y + newY);
+      // target = createVector(this.pos.x + newX, this.pos.y + newY);
       // maxForce = random(0.1, 1);
       // maxSpeed = random(2, 5);
       // size = 13;

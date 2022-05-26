@@ -49,6 +49,7 @@ function star(shape_size, a) {
 
 function star_4(shape_size, a) {
   //6. 4 Pointed star
+  shape_size -= 2.5;
   var x = pow(pow(shape_size, 0.8) * cos(a), 3);
   var y = pow(pow(shape_size, 0.8) * sin(a), 3);
   return [x, y];

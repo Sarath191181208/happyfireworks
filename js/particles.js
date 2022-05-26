@@ -19,8 +19,8 @@ class Particle {
 
   lerp2D(v, n) {
     return createVector(
-      lerp(v.x, this.target.x, n),
-      lerp(v.y, this.target.y, n)
+      lerp(3 * v.x, lerp(v.x, this.target.x, n), n),
+      lerp(3 * v.y, lerp(v.y, this.target.y, n), n)
     )
   }
   behaviours() {
@@ -34,10 +34,11 @@ class Particle {
     if (dist < 50) {
       speed = map(dist, 0, 50, 0, this.maxSpeed)
     }
-    speed = this.lerp2D(this.vel, speed);
+    // speed = this.lerp2D(this.vel, speed, this.lifespan / 255);
     desired.setMag(speed)
-    const steer = p5.Vector.sub(desired, this.vel)
+    let steer = p5.Vector.sub(desired, this.vel)
     steer.limit(this.maxForce)
+    steer = this.lerp2D(steer, 0, this.lifespan / 255);
     return steer
   }
   applyForce(force) {
