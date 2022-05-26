@@ -1,4 +1,4 @@
-This is currently hosted on github pages : https://sarath191181208.github.io/happyfireworks/s
+This is currently hosted on github pages : https://sarath191181208.github.io/happyfireworks/
 
 # Happy fireworks
 
