@@ -1,3 +1,8 @@
+function lerp(x0, x1, t) {
+  return x0 + (x1 - x0) * t;
+}
+
+
 class Particle {
   constructor(pos, target, h, mforce, mspeed, r) {
     this.pos = pos.copy()
@@ -11,43 +16,52 @@ class Particle {
     this.maxSpeed = mspeed || 4
     this.lifespan = 255
   }
-  behaviours(){
-    const seek = this.seek(this.target)
-    this.applyForce(seek)
+
+  lerp2D(v, n) {
+    return createVector(
+      lerp(v.x, this.target.x, n),
+      lerp(v.y, this.target.y, n)
+    )
   }
-  seek(target){
+  behaviours() {
+    let seek = this.seek(this.target);
+    this.applyForce(seek);
+  }
+  seek(target) {
     const desired = p5.Vector.sub(target, this.pos)
     const dist = desired.mag()
     let speed = this.maxSpeed
     if (dist < 50) {
       speed = map(dist, 0, 50, 0, this.maxSpeed)
     }
+    speed = this.lerp2D(this.vel, speed);
     desired.setMag(speed)
     const steer = p5.Vector.sub(desired, this.vel)
     steer.limit(this.maxForce)
     return steer
   }
-  applyForce(force){
+  applyForce(force) {
+
     this.acc.add(force)
   }
-  isDead(){
+  isDead() {
     return (this.lifespan < 0)
   }
-  draw(){
+  draw() {
     push()
     noStroke()
-    fill(this.h, this.s, this.s, this.lifespan/255)
+    fill(this.h, this.s, this.s, this.lifespan / 255)
     ellipse(this.pos.x, this.pos.y, this.r)
     pop()
   }
-  update(){
-    this.draw()
-    this.behaviours()
-    this.target.add(gravity)
+  update() {
+    this.draw();
+    this.behaviours();
+    this.target.add(gravity);
 
-    this.lifespan --
-    this.pos.add(this.vel)
-    this.vel.add(this.acc)
-    this.acc.mult(0)
+    this.lifespan--;
+    this.pos.add(this.vel);
+    this.vel.add(this.acc);
+    this.acc.mult(0);
   }
 }
