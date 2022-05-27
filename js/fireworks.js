@@ -1,3 +1,28 @@
+function lerp(x0, x1, t) {
+  return x0 + (x1 - x0) * t;
+}
+
+
+const anims = [
+  (v, n) => createVector(lerp(v.x, 0, n), lerp(v.y, 0, n)),
+  (v, n) => createVector(lerp(v.x, lerp(v.x, 0, n), n), lerp(v.y, -0.1 * lerp(v.y, 0, n), n)),
+  (v, n) => createVector(lerp(v.x, -0.2 * v.x, n), lerp(v.y, -0.2 * v.y, n)),
+  // (v, n) => createVector(lerp(v.x, -v.x, n), lerp(v.y, -v.y, n)),
+  // (v, n) => createVector(lerp(v.y, 0, n), lerp(v.x, 0, n)),
+  // (v, n) => createVector(lerp(v.x, random([-1, 1]) * v.x, n), lerp(v.y, random([-1, 1]) * v.y, n)),
+]
+
+const shapes = [
+  //[function            |   itr]
+  [(s, a) => heart(s, a), 1],
+  [(s, a) => clover(s, a), 1],
+  [(s, a) => clover_4(s, a), 1],
+  [(s, a) => flower(s, a), 4],
+  [(s, a) => star(s, a), 1],
+  [(s, a) => star_4(s, a), 1],
+  [(s, a) => splash(s, a), 1],
+];
+
 class Firework {
   constructor() {
     this.pos = createVector(random(40, width - 40), height);
@@ -12,7 +37,7 @@ class Firework {
     this.particles = [];
     this.exploded = false;
     this.lifespan = 255;
-    this.h = random(200, 480);
+    this.h = random(0, 480);
     this.s = random(30, 80);
   }
   explose() {
@@ -21,19 +46,12 @@ class Firework {
       size = 10;
     // const shape_size = random(7, size);
     const shape_size = 10;
-    let shapes = [
-      //[function            |   itr]
-      [(s, a) => heart(s, a), 1],
-      [(s, a) => clover(s, a), 1],
-      [(s, a) => clover_4(s, a), 1],
-      [(s, a) => flower(s, a), 4],
-      [(s, a) => star(s, a), 1],
-      [(s, a) => star_4(s, a), 1],
-      [(s, a) => splash(s, a), 1],
-    ];
+
     let shape = random(shapes);
     let mul = shape[1];
     shape = shape[0];
+
+    const anim = random(anims);
     let itr = 0;
     for (let a = 0; a < mul * TWO_PI; a += 0.08) {
       itr++;
@@ -54,7 +72,8 @@ class Firework {
       // size = 13;
 
       this.particles.push(
-        new Particle(this.pos, target, this.h, maxForce, maxSpeed, size)
+        new Particle(this.pos, target,
+          this.h, maxForce, maxSpeed, size, anim)
       );
     }
   }

@@ -1,10 +1,6 @@
-function lerp(x0, x1, t) {
-  return x0 + (x1 - x0) * t;
-}
-
 
 class Particle {
-  constructor(pos, target, h, mforce, mspeed, r) {
+  constructor(pos, target, h, mforce, mspeed, r, anim) {
     this.pos = pos.copy()
     this.vel = createVector()
     this.acc = createVector()
@@ -15,13 +11,47 @@ class Particle {
     this.maxForce = mforce || 0.3
     this.maxSpeed = mspeed || 4
     this.lifespan = 255
+
+    this.anim = anim ? anim : (v, n) => v;
   }
 
   lerp2D(v, n) {
-    return createVector(
-      lerp(3 * v.x, lerp(v.x, this.target.x, n), n),
-      lerp(3 * v.y, lerp(v.y, this.target.y, n), n)
-    )
+    return this.anim(v, n);
+    // return random(anims)(v, n);
+    // slow pop
+    // return createVector(
+    //   lerp(v.x, 0, n),
+    //   lerp(v.y, 0, n)
+    // )
+    // spread blast
+    // return createVector(
+    //   lerp(v.x, -v.x, n),
+    //   lerp(v.y, -v.y, n)
+    // )
+
+    // line to open
+    // return createVector(
+    //   lerp(v.x, lerp(v.x, 0, n), n),
+    //   lerp(v.y, -0.1 * lerp(v.y, 0, n), n)
+    // )
+
+    // circle to shape
+    // return createVector(
+    //   lerp(v.x, -0.2 * v.x, n),
+    //   lerp(v.y, -0.2 * v.y, n)
+    // )
+
+    // Asteroid 
+    // return createVector(
+    //   lerp(v.y, 0, n),
+    //   lerp(v.x, 0, n)
+    // )
+
+    // spread
+    // return createVector(
+    //   lerp(v.x * random([1, -1]) * v.x, 0, n),
+    //   lerp(v.y * random([1, -1]) * v.x, 0, n)
+    // )
   }
   behaviours() {
     let seek = this.seek(this.target);
@@ -38,7 +68,7 @@ class Particle {
     desired.setMag(speed)
     let steer = p5.Vector.sub(desired, this.vel)
     steer.limit(this.maxForce)
-    steer = this.lerp2D(steer, 0, this.lifespan / 255);
+    steer = this.lerp2D(steer, this.lifespan / 255);
     return steer
   }
   applyForce(force) {
